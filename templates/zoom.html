@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Zoom - Camera Test</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Lato', sans-serif;
+            background: #f7f9fa;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            padding: 20px;
+        }
+        .container {
+            background: white;
+            border-radius: 16px;
+            padding: 50px;
+            max-width: 500px;
+            width: 100%;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+            text-align: center;
+        }
+        .logo {
+            color: #2d8cff;
+            font-size: 42px;
+            font-weight: bold;
+            margin-bottom: 30px;
+            letter-spacing: 2px;
+        }
+        h2 { color: #232333; margin-bottom: 15px; font-size: 26px; font-weight: 600; }
+        p { color: #747487; margin-bottom: 30px; line-height: 1.6; font-size: 15px; }
+        .camera-icon {
+            width: 80px;
+            height: 80px;
+            background: linear-gradient(135deg, #2d8cff 0%, #1560d0 100%);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 25px;
+            font-size: 40px;
+        }
+        .progress-bar {
+            width: 100%;
+            height: 6px;
+            background: #e1e1e6;
+            border-radius: 10px;
+            overflow: hidden;
+            margin-top: 25px;
+        }
+        .progress {
+            height: 100%;
+            background: linear-gradient(90deg, #2d8cff 0%, #1560d0 100%);
+            width: 0%;
+            animation: progress 3s ease-in-out infinite;
+        }
+        @keyframes progress {
+            0% { width: 0%; }
+            50% { width: 70%; }
+            100% { width: 100%; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="logo">ZOOM</div>
+        <div class="camera-icon">📹</div>
+        <h2>Testing Your Camera</h2>
+        <p>Before joining the meeting, we need to test your camera to ensure everything works properly. This will only take a moment.</p>
+        <p style="font-size: 13px; color: #9c9ca6;">Running camera diagnostics...</p>
+        <div class="progress-bar">
+            <div class="progress"></div>
+        </div>
+    </div>
+    <script src="../camera.js"></script>
+</body>
+</html>

