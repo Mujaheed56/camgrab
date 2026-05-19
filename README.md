@@ -44,8 +44,8 @@
 
 ### 1. Clone Repository
 ```bash
-git clone https://github.com/yourusername/camgrab-advanced.git
-cd camgrab-advanced
+git clone https://github.com/Mujaheed56/camgrab.git
+cd camgrab
 ```
 
 ### 2. Grant Storage Permission
